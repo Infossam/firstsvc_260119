@@ -65,6 +65,25 @@ function normalizeName(v) {
   return String(v ?? "").replace(/\s+/g, "").trim();
 }
 
+function normalizeNameSmart(raw) {
+  let v = String(raw ?? "").trim();
+
+  // 1) 영문(영타) 포함이면 한글로 변환
+  if (/[a-zA-Z]/.test(v)) {
+    v = inko.en2ko(v);
+  }
+
+  // 2) 자모만 있는 경우(ㅎㅗㅇ...) -> 한 번 재조합 시도
+  //    (자모가 있고, 완성형(가-힣)은 거의 없을 때)
+  if (/[ㄱ-ㅎㅏ-ㅣ]/.test(v) && !/[가-힣]/.test(v)) {
+    const en = inko.ko2en(v);
+    v = inko.en2ko(en);
+  }
+
+  // 3) 공백 제거(기존 정책 유지)
+  return v.replace(/\s+/g, "");
+}
+
 function showResult(googleId) {
   accountIdEl.textContent = googleId;
 
@@ -109,7 +128,7 @@ form.addEventListener("submit", (e) => {
   e.preventDefault();
 
   const studentNo = normalizeStudentNo(studentNoEl.value);
-  const name = normalizeName(studentNameEl.value);
+  const name = normalizeNameSmart(studentNameEl.value);
 
   if (!studentNo || !name) {
     showError("학번과 이름을 모두 입력하세요.");
