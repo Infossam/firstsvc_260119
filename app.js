@@ -10,6 +10,20 @@ const ACCOUNT_DB = [
   { studentNo: "30102", name: "김철수", googleId: "30102.kim@school.example" },
 ];
 
+// Inko 초기화 (브라우저 전역 Inko 사용)
+const inko = new Inko();
+
+// 이름 입력창에서 영타를 한글로 자동 변환
+studentNameEl.addEventListener("input", () => {
+  const v = studentNameEl.value;
+
+  // 영문이 섞여 있을 때만 변환(불필요한 변환 최소화)
+  if (/[a-zA-Z]/.test(v)) {
+    const converted = inko.en2ko(v);
+    if (converted !== v) studentNameEl.value = converted;
+  }
+});
+
 // 2) DOM
 const form = document.getElementById("searchForm");
 const studentNoEl = document.getElementById("studentNo");
