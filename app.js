@@ -2,19 +2,6 @@
  * 기능: 학번+이름으로 계정 ID 조회, 결과 표시/에러 표시, 초기화
  * 주의: 비밀번호는 저장/표시하지 않음(보안상)
  */
-// Inko 초기화 (브라우저 전역 Inko 사용)
-const inko = new Inko();
-
-// 이름 입력창에서 영타를 한글로 자동 변환
-studentNameEl.addEventListener("input", () => {
-  const v = studentNameEl.value;
-
-  // 영문이 섞여 있을 때만 변환(불필요한 변환 최소화)
-  if (/[a-zA-Z]/.test(v)) {
-    const converted = inko.en2ko(v);
-    if (converted !== v) studentNameEl.value = converted;
-  }
-});
 
 // 1) (임시) 로컬 더미 데이터: 실제 운영 시 서버/Apps Script로 대체
 //    - 이름은 공백 제거 후 비교(예: "홍 길동" -> "홍길동")
@@ -36,6 +23,20 @@ const errorBox = document.getElementById("errorBox");
 
 const accountIdEl = document.getElementById("accountId");
 const resetPwLink = document.getElementById("resetPwLink");
+
+// Inko 초기화 (브라우저 전역 Inko 사용)
+const inko = new Inko();
+
+// 이름 입력창에서 영타를 한글로 자동 변환
+studentNameEl.addEventListener("input", () => {
+  const v = studentNameEl.value;
+
+  // 영문이 섞여 있을 때만 변환(불필요한 변환 최소화)
+  if (/[a-zA-Z]/.test(v)) {
+    const converted = inko.en2ko(v);
+    if (converted !== v) studentNameEl.value = converted;
+  }
+});
 
 // 3) 유틸
 function normalizeStudentNo(v) {
