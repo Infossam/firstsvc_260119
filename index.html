@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>학교 구글 계정 조회</title>
+   <!-- CSS 파일 연결 추가 -->
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+  <main class="app" aria-label="학교 구글 계정 조회">
+    <header class="header">
+      <h1>구글 계정 조회</h1>
+      <p class="desc">학번과 이름을 입력하면 계정 ID를 확인할 수 있습니다. 비밀번호는 표시하지 않습니다.</p>
+    </header>
+
+    <section class="card" aria-label="검색 영역">
+      <form id="searchForm" autocomplete="off">
+        <div class="field">
+          <label for="studentNo">학번</label>
+          <input
+            id="studentNo"
+            name="studentNo"
+            type="text"
+            inputmode="numeric"
+            placeholder="예: 30101"
+            required
+          />
+        </div>
+
+        <div class="field">
+          <label for="studentName">이름</label>
+          <input
+            id="studentName"
+            name="studentName"
+            type="text"
+            placeholder="예: 홍길동"
+            required
+          />
+        </div>
+
+        <div class="actions">
+          <button id="searchBtn" type="submit">검색</button>
+          <button id="resetBtn" type="button">초기화</button>
+        </div>
+
+        <p class="hint">Enter를 누르거나 “검색” 버튼을 누르면 조회됩니다.</p>
+      </form>
+    </section>
+
+    <section class="card" aria-label="결과 영역">
+      <h2>조회 결과</h2>
+
+      <div id="resultEmpty" class="result-empty">
+        학번과 이름을 입력한 뒤 검색하세요.
+      </div>
+
+      <div id="resultBox" class="result" hidden>
+        <dl>
+          <div class="row">
+            <dt>구글 계정 ID</dt>
+            <dd><code id="accountId">-</code></dd>
+          </div>
+          <div class="row">
+            <dt>비밀번호</dt>
+            <dd>
+              <span id="pwPolicy">보안상 비밀번호는 표시하지 않습니다. 관리자/셀프 재설정 절차를 이용하세요.</span>
+            </dd>
+          </div>
+        </dl>
+
+        <div class="actions">
+          <!-- 실제 운영 시: 비밀번호 재설정(관리자) 또는 안내 페이지로 연결 -->
+          <a id="resetPwLink" href="#" role="button">비밀번호 재설정 안내</a>
+        </div>
+      </div>
+
+      <div id="errorBox" class="error" hidden role="alert">
+        일치하는 정보를 찾지 못했습니다.
+      </div>
+    </section>
+
+    <footer class="footer">
+      <small>개인정보 보호를 위해 조회 로그가 기록될 수 있습니다.</small>
+    </footer>
+  </main>
+
+  <!-- 다음 단계에서 JS로 submit(Enter 포함) 처리 + 데이터 조회 연결 -->
+  <script src="./app.js"></script>
+</body>
+</html>
