@@ -29,32 +29,6 @@ const inko = new Inko();
 
 let isComposing = false;
 
-// 한글 IME 조합 시작/끝 감지
-studentNameEl.addEventListener("compositionstart", () => {
-  isComposing = true;
-});
-studentNameEl.addEventListener("compositionend", () => {
-  isComposing = false;
-
-  // 조합이 끝난 시점에만(=한글 입력 완료) 영타 교정 수행
-  const v = studentNameEl.value;
-  if (/[a-zA-Z]/.test(v)) {
-    studentNameEl.value = inko.en2ko(v);
-  }
-});
-
-// 입력 중에는(조합 중이면) 건드리지 않음
-studentNameEl.addEventListener("input", () => {
-  if (isComposing) return;
-
-  // 조합 중이 아닌데 영문이 섞여 있으면(예: 붙여넣기)만 변환
-  const v = studentNameEl.value;
-  if (/[a-zA-Z]/.test(v)) {
-    studentNameEl.value = inko.en2ko(v);
-  }
-});
-
-
 // 3) 유틸
 function normalizeStudentNo(v) {
   return String(v ?? "").trim();
