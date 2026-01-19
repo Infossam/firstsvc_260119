@@ -227,3 +227,44 @@ code {
   color: var(--gray-500);
   font-size: 0.75rem;
 }
+
+/* 긴 계정 ID 줄바꿈 처리 */
+code {
+  word-break: break-all;
+  white-space: normal;
+}
+
+@media (max-width: 768px) {
+  .app {
+    padding: 20px 14px 32px;
+  }
+
+  /* 결과 영역을 세로 배치로 */
+  .result .row {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+
+  dt {
+    font-size: 0.8rem;
+  }
+
+  dd {
+    font-size: 0.9rem;
+  }
+
+  /* 버튼도 모바일에서 한 줄씩 */
+  .actions {
+    flex-direction: column;
+  }
+
+  button,
+  a[role="button"] {
+    width: 100%;
+  }
+}
+
+#accountId {
+  display: inline-block;
+  max-width: 100%;
+}
