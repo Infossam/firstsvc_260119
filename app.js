@@ -2,14 +2,6 @@
  * 기능: 학번+이름으로 계정 ID 조회, 결과 표시/에러 표시, 초기화
  * 주의: 비밀번호는 저장/표시하지 않음(보안상)
  */
-
-// 1) (임시) 로컬 더미 데이터: 실제 운영 시 서버/Apps Script로 대체
-//    - 이름은 공백 제거 후 비교(예: "홍 길동" -> "홍길동")
-const ACCOUNT_DB = [
-  { studentNo: "30101", name: "홍길동", googleId: "30101.hong@school.example" },
-  { studentNo: "30102", name: "김철수", googleId: "30102.kim@school.example" },
-];
-
 // Inko 초기화 (브라우저 전역 Inko 사용)
 const inko = new Inko();
 
@@ -23,6 +15,14 @@ studentNameEl.addEventListener("input", () => {
     if (converted !== v) studentNameEl.value = converted;
   }
 });
+
+// 1) (임시) 로컬 더미 데이터: 실제 운영 시 서버/Apps Script로 대체
+//    - 이름은 공백 제거 후 비교(예: "홍 길동" -> "홍길동")
+const ACCOUNT_DB = [
+  { studentNo: "30101", name: "홍길동", googleId: "30101.hong@school.example" },
+  { studentNo: "30102", name: "김철수", googleId: "30102.kim@school.example" },
+];
+
 
 // 2) DOM
 const form = document.getElementById("searchForm");
