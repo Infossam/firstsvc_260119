@@ -27,16 +27,33 @@ const resetPwLink = document.getElementById("resetPwLink");
 // Inko 초기화 (브라우저 전역 Inko 사용)
 const inko = new Inko();
 
-// 이름 입력창에서 영타를 한글로 자동 변환
-studentNameEl.addEventListener("input", () => {
-  const v = studentNameEl.value;
+let isComposing = false;
 
-  // 영문이 섞여 있을 때만 변환(불필요한 변환 최소화)
+// 한글 IME 조합 시작/끝 감지
+studentNameEl.addEventListener("compositionstart", () => {
+  isComposing = true;
+});
+studentNameEl.addEventListener("compositionend", () => {
+  isComposing = false;
+
+  // 조합이 끝난 시점에만(=한글 입력 완료) 영타 교정 수행
+  const v = studentNameEl.value;
   if (/[a-zA-Z]/.test(v)) {
-    const converted = inko.en2ko(v);
-    if (converted !== v) studentNameEl.value = converted;
+    studentNameEl.value = inko.en2ko(v);
   }
 });
+
+// 입력 중에는(조합 중이면) 건드리지 않음
+studentNameEl.addEventListener("input", () => {
+  if (isComposing) return;
+
+  // 조합 중이 아닌데 영문이 섞여 있으면(예: 붙여넣기)만 변환
+  const v = studentNameEl.value;
+  if (/[a-zA-Z]/.test(v)) {
+    studentNameEl.value = inko.en2ko(v);
+  }
+});
+
 
 // 3) 유틸
 function normalizeStudentNo(v) {
